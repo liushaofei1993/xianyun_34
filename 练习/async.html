@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 考语文
+         var promise = new Promise(function (resolve, reject) {
+        setTimeout(function (){
+            const res = 54
+
+            if (res > 60) {
+          resolve('买手机')
+        } else {
+          reject('吊起来打')
+        }
+      }, 2000)
+    })
+    // 考数学
+    var promise2 = new Promise(function (resolve, reject) {
+        setTimeout(function (){
+            const res = 34
+
+            if (res > 60) {
+          resolve('买项链')
+        } else {
+          reject('仰卧起坐')
+        }
+      }, 2000)
+    })
+
+    // 如果遇到需要多个同步的异步的处理时,可以使用async  await 同步实现
+     // await后面接上promise，返回值是promise成功回调函数的参数
+    async function test (){
+        try{
+            var res = await promise 
+            console.log(res)
+        }catch(err){
+            console.log(err)
+        }
+        
+
+        try{
+            var res2 = await promise2
+            console.log(res2)
+        }catch(err){
+            console.log(err)
+        }
+    }
+    test()
+    </script>
+</body>
+</html>
