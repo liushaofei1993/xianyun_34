@@ -2,10 +2,8 @@
 export const state = {
     userInfo:{
         token:'',
-        user:{
-            nickname:'朔月'
-        }
-    }
+        user:{}
+    }      
 }
 
 // 同步修改数据 mutations

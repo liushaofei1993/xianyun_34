@@ -43,6 +43,9 @@ export default {
                     data:this.loginForm
                 }).then(res=>{
                     console.log(res.data)
+                    // this.$store.state.user.userInfo = res.data
+                    // 调用store中mutations中的方法是要用 commit
+                    this.$store.commit('user/setUserInfo',res.data)
                 })
             }
         })

@@ -14,7 +14,7 @@
           <nuxt-link to="/air">国内机票</nuxt-link>
         </el-row>
         <!-- 登录 -->
-        <div v-if="true" class="login">
+        <div v-if="false" class="login">
           <nuxt-link to="/user/login">登录/注册</nuxt-link>
         </div>
         <!-- 登陆之后的布局 -->
