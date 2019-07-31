@@ -46,6 +46,8 @@ export default {
                     // this.$store.state.user.userInfo = res.data
                     // 调用store中mutations中的方法是要用 commit
                     this.$store.commit('user/setUserInfo',res.data)
+                    // 登陆成功之后进行跳转
+                    this.$router.push('/')
                 })
             }
         })

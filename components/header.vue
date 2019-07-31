@@ -14,7 +14,7 @@
           <nuxt-link to="/air">国内机票</nuxt-link>
         </el-row>
         <!-- 登录 -->
-        <div v-if="false" class="login">
+        <div v-if="!$store.state.user.userInfo.token" class="login">
           <nuxt-link to="/user/login">登录/注册</nuxt-link>
         </div>
         <!-- 登陆之后的布局 -->
@@ -27,7 +27,9 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>个人中心</el-dropdown-item>
-            <el-dropdown-item>退出</el-dropdown-item>
+            <el-dropdown-item @click.native="handleLogout">
+              退出  
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         </div>
@@ -38,8 +40,14 @@
 
 <script>
 export default {
+  methods:{
+    handleLogout(){
+      // 调用store中的清除state数据的方法
+      this.$store.commit('user/clearUserInfo')
+    }
+  },  
   mounted(){
-    console.log(this.$store.state.user.userInfo.user.nickname)
+    // console.log(this.$store.state.user.userInfo.user.nickname)
   }
 };
 </script>
