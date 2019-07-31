@@ -14,7 +14,7 @@
           <nuxt-link to="/air">国内机票</nuxt-link>
         </el-row>
         <!-- 登录 -->
-        <div v-if="false" class="login">
+        <div v-if="true" class="login">
           <nuxt-link to="/user/login">登录/注册</nuxt-link>
         </div>
         <!-- 登陆之后的布局 -->
@@ -22,7 +22,7 @@
             <el-dropdown>
           <span class="el-dropdown-link">
             <img src="http://157.122.54.189:9093/images/pic_sea.jpeg" alt="">
-            银河奥特曼
+            {{$store.state.user.userInfo.user.nickname}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -37,7 +37,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  mounted(){
+    console.log(this.$store.state.user.userInfo.user.nickname)
+  }
+};
 </script>
 
 <style scoped lang="less" >
@@ -82,6 +86,7 @@ export default {};
   }
 }
 .el-dropdown-link{
+    cursor:pointer;
     img{
         width: 25px;
         height: 25px;
