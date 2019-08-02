@@ -77,7 +77,9 @@ export default {
     methods: {
         // tab切换时触发
         handleSearchTab(item, index){
-            
+            if(index === 1){
+                this.$alert("展示不支持往返","温馨提示",{type:"warning"})
+            }
         },
         
         // 出发城市输入值的时候触发
