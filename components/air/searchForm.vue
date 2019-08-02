@@ -37,7 +37,7 @@
                 placeholder="请选择日期" 
                 style="width: 100%;"
                 @change="handleDate"
-                v-model="form.dapartDate">
+                v-model="form.departDate">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="">
@@ -70,7 +70,7 @@ export default {
                 departCode:'',
                 destCity:'',
                 destCode:'',
-                dapartDate:''
+                departDate:''
             },
         }
     },
@@ -84,7 +84,7 @@ export default {
         // value 是选中的值，cb是回调函数，接收要展示的列表
         queryDepartSearch(value, cb){
            if(!value){
-               cb([])
+               cb([]);
                return
            }
 
@@ -98,11 +98,15 @@ export default {
             //    console.log(res)
             const {data} = res.data
             // 给每一个对象添加一个value属性
-            const newData = []
+            const newData = [];
             data.forEach(v => {
                 v.value = v.name.replace('市','')
                 newData.push(v)
+                // console.log(newData)
             })  
+            // 设置第一个城市为默认值
+            this.form.departCity = newData[0].value
+            this.form.departCode = newData[0].sort
 
             cb(newData)       
            })
@@ -130,7 +134,12 @@ export default {
             data.forEach(v => {
                 v.value = v.name.replace('市','')
                 newData.push(v)
+                // console.log(newData)
+
             })  
+             // 设置第一个城市为默认值
+            this.form.destCity = newData[0].value
+            this.form.destCode = newData[0].sort
             
             cb(newData)       
            })
@@ -140,7 +149,7 @@ export default {
         handleDepartSelect(item) {
             // console.log(item)
             // 赋值给出发城市
-            this.form.dapartCity = item.value
+            this.form.departCity = item.value
             // 赋值给出发城市代码
             this.form.departCode = item.sort
         },
@@ -154,7 +163,7 @@ export default {
         // 确认选择日期时触发
         handleDate(value){
         //    console.log(moment(value).format('YYYY-MM-DD'))
-            this.form.dapartDate = moment(value).format('YYYY-MM-DD')
+            this.form.departDate = moment(value).format('YYYY-MM-DD')
         },
 
         // 触发和目标城市切换时触发
@@ -162,12 +171,28 @@ export default {
             
         },
 
-        // 提交表单是触发
+        // 提交表单时触发
         handleSubmit(){
            console.log(this.form)
+           // 自定义表单验证
+           if(!this.form.departCity){
+               this.$alert('出发城市不能为空','提示',
+               {type:'warning'})
+               return
+           }
+           if(!this.form.destCity){
+               this.$alert('到达城市不能为空','提示',
+               {type:'warning'})
+               return
+           }
+           if(!this.form.departDate){
+               this.$alert('出发时间不能为空','提示',
+               {type:'warning'})
+               return
+           }
            // 跳转到机票列表页
            this.$router.push({
-               url:'/air/flights',
+               path:'/air/flights',
                query:this.form
         })
         }
