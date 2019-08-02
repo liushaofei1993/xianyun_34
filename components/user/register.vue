@@ -29,96 +29,82 @@
 </template>
 <script>
 export default {
-  data() {
-    
-    const validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入密码"));
-      } else if (value !== this.form.password) {
-        callback(new Error("两次输入密码不一致!"));
-      } else {
-        callback();
-      }
-    };
-
-    return {
-      // 表单数据
-      form: {
-        username: "",
-        captcha: "", 
-        nickname: "",
-        password: "",
-        checkPassword: "" 
-      },
-      // 表单规则
-      rules: {
-        username: [
-          { required: true, message: "用户名不能为空", trigger: "blur" }
-        ],
-        captcha: [
-          { required: true, message: "手机验证码不能为空", trigger: "blur" }
-        ],
-        nickname: [
-          { required: true, message: "昵称不能为空", trigger: "blur" }
-        ],
-        password: [
-          { required: true, message: "密码不能为空", trigger: "blur" }
-        ],
-
-        
-        checkPassword: [{ validator: validatePass, trigger: "blur" }]
-      }
-    };
-  },
-  methods: {
-    // 手机发送验证码
-    handleSendCaptcha() {
-      // 判断手机号码是否为空
-      if (!this.form.username) {
-        this.$message.warning("手机号码不能为空");
-        return;
-      }
-
-      this.$axios({
-        url: "/captchas",
-        method: "POST",
-        data: {
-          tel: this.form.username
+    data(){
+       
+        const validatePass = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请再次输入密码'));
+            } else if (value !== this.form.password) {
+                callback(new Error('两次输入密码不一致!'));
+            } else {
+                callback();
+            }
+        };
+        return {
+            // 表单数据
+            form: {
+                username: "",
+                captcha: "",
+                nickname: "", 
+                password: "",
+                checkPassword: "" 
+            },
+            // 表单规则
+            rules: {
+                username: [ { required: true, message: "用户名不能为空", trigger: "blur" } ],
+                captcha: [ { required: true, message: "手机验证码不能为空", trigger: "blur" } ],
+                nickname: [ { required: true, message: "昵称不能为空", trigger: "blur" } ],
+                password: [ { required: true, message: "密码不能为空", trigger: "blur" } ],
+               
+                checkPassword: [
+                    { validator: validatePass, trigger: 'blur' }
+                 ],
+            },
         }
-      }).then(res => {
-        const { code } = res.data;
-
-        this.$alert(`模拟手机验证码为：${code}`, "提示", {
-          type: "warning"
-        });
-      });
     },
-
-    // 注册
-    handleRegSubmit() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          
-          const { checkPassword, ...props } = this.form;
-
-          // 调用注册的接口
-          this.$axios({
-            url: "/accounts/register",
-            method: "POST",
-            data: props
-          }).then(res => {
-            console.log(res.data)
-
-            this.$store.commit("user/setUserInfo", res.data);
-
-            // 跳转到首页
-            this.$router.push("/");
-          });
+    methods: {
+        // 手机发送验证码
+        handleSendCaptcha(){
+            // 判断手机号码是否为空
+            if(!this.form.username){
+                this.$message.warning("手机号码不能为空");
+                return;
+            }
+            this.$axios({
+                url: "/captchas",
+                method: "POST",
+                data: {
+                    tel: this.form.username
+                }
+            }).then(res => {
+                const { code } = res.data;
+                this.$alert( `模拟手机验证码为：${code}`, "提示", {
+                    type: "warning"
+                } )
+            })
+        },
+        // 注册
+        handleRegSubmit(){
+           this.$refs.form.validate( valid => {
+               if(valid){
+                  
+                   const { checkPassword, ...props } = this.form;
+                   // 调用注册的接口
+                    this.$axios({
+                        url: "/accounts/register",
+                        method: "POST",
+                        data: props
+                    }).then(res => {
+                     
+                        this.$store.commit("user/setUserInfo", res.data);
+                        // 跳转到首页
+                        this.$router.push("/")
+                    })  
+               }
+           } )
         }
-      });
     }
-  }
-};
+}
 </script>
 <style scoped lang="less">
 .form {
