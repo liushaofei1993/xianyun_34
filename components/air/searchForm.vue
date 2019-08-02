@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
     data(){
         return {
@@ -138,7 +139,9 @@ export default {
         // 出发城市下拉选择时触发
         handleDepartSelect(item) {
             // console.log(item)
+            // 赋值给出发城市
             this.form.dapartCity = item.value
+            // 赋值给出发城市代码
             this.form.departCode = item.sort
         },
 
@@ -150,7 +153,8 @@ export default {
 
         // 确认选择日期时触发
         handleDate(value){
-           
+        //    console.log(moment(value).format('YYYY-MM-DD'))
+            this.form.dapartDate = moment(value).format('YYYY-MM-DD')
         },
 
         // 触发和目标城市切换时触发
@@ -160,7 +164,12 @@ export default {
 
         // 提交表单是触发
         handleSubmit(){
-           
+           console.log(this.form)
+           // 跳转到机票列表页
+           this.$router.push({
+               url:'/air/flights',
+               query:this.form
+        })
         }
     },
     mounted() {
