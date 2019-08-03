@@ -18,7 +18,7 @@
                    <FlightsItem
                     v-for="(item,index) in listData"
                     :key="index"
-                   />
+                    :data="item"/>
                 </div>
             </div>
 
