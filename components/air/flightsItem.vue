@@ -14,7 +14,7 @@
               <span>{{data.org_airport_name}}{{data.org_airport_quay}}</span>
             </el-col>
             <el-col :span="8" class="flight-time">
-              <span>2时20分</span>
+              <span>{{difference}}</span>
             </el-col>
             <el-col :span="8" class="flight-airport">
               <strong>{{data.arr_time}}</strong>
@@ -58,7 +58,31 @@
 
 <script>
 export default {
-  props: ["data"]
+  props: ["data"],
+  computed:{
+    // 计算时间差
+    difference(){
+      // 转成数组
+       const arr = this.data.arr_time.split(":")
+       const dep = this.data.dep_time.split(":")
+       // 如果到达时间是第二天凌晨,则到达时间小时制加24
+       if(arr[0]<dep[0]){
+         arr[0] += 24;
+       }
+      // 转化为分钟
+      const arrM = arr[0]*60 + +arr[1]
+      const depM = dep[0]*60 + +dep[1]
+      // 到达时间减去出发时间
+      const differ= arrM-depM
+      // 拆分时和分
+      const hour = Math.floor(differ/60)
+      const minute = differ%60
+      // 拼接时和分
+      return `${hour}时${minute}分`
+      
+       
+    }
+  }
 };
 </script>
 
