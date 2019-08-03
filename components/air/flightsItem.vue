@@ -1,6 +1,6 @@
 <template>
   <div class="flight-item">
-    <div>
+    <div @click="isShow = !isShow">
       <!-- 显示的机票信息 -->
       <el-row type="flex" align="middle" class="flight-info">
         <el-col :span="6">
@@ -28,7 +28,7 @@
         </el-col>
       </el-row>
     </div>
-    <div class="flight-recommend">
+    <div class="flight-recommend" v-if="isShow">
       <!-- 隐藏的座位信息列表 -->
       <el-row type="flex" justify="space-between" align="middle">
         <el-col :span="4">低价推荐</el-col>
@@ -58,7 +58,21 @@
 
 <script>
 export default {
-  props: ["data"],
+  // 声明组件可以接受哪些属性
+  // props: ["data"],
+  
+  props:{
+    data:{
+      type:Object,   // 声明属性类型
+      default:{}     // 如果调用组件时不传该属性值,就会取这个默认值
+    }
+  },
+
+  data(){
+    return{
+      isShow:false
+    }
+  },
   computed:{
     // 计算时间差
     difference(){
