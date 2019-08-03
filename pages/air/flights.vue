@@ -15,7 +15,10 @@
                 
                 <!-- 航班信息 -->
                 <div>
-                   <FlightsItem/>
+                   <FlightsItem
+                    v-for="(item,index) in listData"
+                    :key="index"
+                   />
                 </div>
             </div>
 
@@ -36,12 +39,28 @@ import moment from "moment";
 export default {
     data(){
         return {
-            
+            listData:''
         }
     },
     components:{
         FlightsListHead,
         FlightsItem
+    },
+    methods:{
+        getFlightsData(){
+            // console.log(this.$route)
+            
+            this.$axios({
+                url:'airs',
+                params:this.$route.query
+            }).then(res=>{
+                console.log(res.data)
+                this.listData = res.data.flights
+            })
+        }
+    },
+    mounted(){
+        this.getFlightsData()
     }
 }
 </script>
