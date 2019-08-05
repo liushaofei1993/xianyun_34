@@ -5,38 +5,46 @@
         单程：
         {{data.info.departCity}} - {{data.info.destCity}}
         /
-       {{data.info.departDate}}
+        {{data.info.departDate}}
       </el-col>
       <el-col :span="4">
         <el-select size="mini" v-model="airport" placeholder="起飞机场" @change="handleAirport">
-          <el-option 
-          v-for="(item,index) in data.options.airport" 
-          :key="index"
-          :label="item" :value="item"></el-option>
+          <el-option
+            v-for="(item,index) in data.options.airport"
+            :key="index"
+            :label="item"
+            :value="item"
+          ></el-option>
         </el-select>
       </el-col>
       <el-col :span="4">
         <el-select size="mini" v-model="flightTimes" placeholder="起飞时间" @change="handleFlightTimes">
-          <el-option 
-          v-for="(item,index) in data.options.flightTimes" 
-          :key="index"
-          :label="`${item.from}:00 - ${item.to}:00`" :value="`${item.from},${item.to}`"></el-option>
+          <el-option
+            v-for="(item,index) in data.options.flightTimes"
+            :key="index"
+            :label="`${item.from}:00 - ${item.to}:00`"
+            :value="`${item.from},${item.to}`"
+          ></el-option>
         </el-select>
       </el-col>
       <el-col :span="4">
         <el-select size="mini" v-model="company" placeholder="航空公司" @change="handleCompany">
           <el-option
-          v-for="(item,index) in data.options.company" 
-          :key="index"
-          :label="item" :value="item"></el-option>
+            v-for="(item,index) in data.options.company"
+            :key="index"
+            :label="item"
+            :value="item"
+          ></el-option>
         </el-select>
       </el-col>
       <el-col :span="4">
         <el-select size="mini" v-model="airSize" placeholder="机型" @change="handleAirSize">
           <el-option
-          v-for="(item,index) in airSizeList" 
-          :key="index"
-          :label="item.label" :value="item.value"></el-option>
+            v-for="(item,index) in airSizeList"
+            :key="index"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
         </el-select>
       </el-col>
     </el-row>
@@ -122,7 +130,16 @@ export default {
     },
 
     // 撤销条件时候触发
-    handleFiltersCancel() {}
+    handleFiltersCancel() {
+      // 恢复条件选项
+      this.airport = ""
+      this.flightTimes =""
+      this.company = ""
+      this.airSize = ""
+
+      // 恢复列表数据
+      this.$emit("setListData",this.data.flights)
+    }
   },
   mounted(){
     // console.log(this.data)
