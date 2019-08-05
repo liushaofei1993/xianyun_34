@@ -4,7 +4,7 @@
       <!-- 顶部过滤列表 -->
       <div class="flights-content">
         <!-- 过滤条件 -->
-        <FlightsFilters :data="flightsData"/>
+        <FlightsFilters :data="flightsData" @setListData ="setListData"/>
 
         <!-- 航班头部布局 -->
         <FlightsListHead />
@@ -65,7 +65,13 @@ export default {
   },
   methods: {
     // 设置数据库listData
-    setListData() {
+    setListData(arr) {
+      // 添加子组件flightsFilters的需求操作: 修改列表数据flightsData.flights
+      if(arr){
+        this.flightsData.flights = arr;
+        this.total = arr.length
+      }
+
       // 获取截取大数据时需要的参数
       const start = (this.pageIndex - 1) * this.pageSize;
       const end = start + this.pageSize;

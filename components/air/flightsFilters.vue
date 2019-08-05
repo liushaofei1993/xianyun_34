@@ -79,10 +79,20 @@ export default {
     handleFlightTimes(value) {},
 
     // 选择航空公司时候触发
-    handleCompany(value) {},
+    handleCompany(value) {
+      // 用数组的 filter 方法过滤出符合选择条件的数据组成新数组
+      const arr = this.data.flights.filter(v=>{
+        return v.airline_name === value   // 若v.airline_name = value为真,则将this.data.flights中符合条件的对象过滤出添加到arr中
+      })
+        // console.log(arr)
+        // 然后调用传到本组件中的父组件中的setListData方法修改列表数据
+        this.$emit("setListData", arr)
+    },
 
     // 选择机型时候触发
-    handleAirSize(value) {},
+    handleAirSize(value) {
+
+    },
 
     // 撤销条件时候触发
     handleFiltersCancel() {}
