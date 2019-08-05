@@ -54,7 +54,7 @@ export default {
       listData: [],
 
       pageIndex: 1,
-      pageSize: 8,
+      pageSize: 4,
       total: 0,
 
       // 提前缓存一份大的数据
@@ -74,7 +74,8 @@ export default {
     setListData(arr) {
       // 添加子组件flightsFilters的需求操作: 修改列表数据flightsData.flights
       if(arr){
-        this.flightsData.flights = arr;
+        this.pageIndex = 1
+        this.flightsData.flights = arr
         this.total = arr.length
       }
 
