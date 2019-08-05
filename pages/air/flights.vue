@@ -4,8 +4,8 @@
       <!-- 顶部过滤列表 -->
       <div class="flights-content">
         <!-- 过滤条件 -->
-        <FlightsFilters :data="flightsData" @setListData ="setListData"/>
-
+        <FlightsFilters :data="cacheFlightsData" @setListData ="setListData"/>
+                              <!-- 上面这个是缓存的大数据,一旦赋值将不能修改,可解决修改过滤数据时flightsData被arr覆盖的问题 -->
         <!-- 航班头部布局 -->
         <FlightsListHead />
 
@@ -55,7 +55,13 @@ export default {
 
       pageIndex: 1,
       pageSize: 8,
-      total: 0
+      total: 0,
+
+      // 提前缓存一份大的数据
+      cacheFlightsData:{
+        info:{},
+        options:{}
+      }
     };
   },
   components: {
@@ -103,6 +109,10 @@ export default {
       console.log(res.data);
       // 保存总的大数据
       this.flightsData = res.data;
+
+      // 另外缓存一份总的大数据,赋值之后将不能被修改
+      this.cacheFlightsData = {...res.data}
+
       // 总和赋值
       this.total = this.flightsData.flights.length;
       // 切割出当前页面需要的数据
