@@ -4,7 +4,7 @@
       <!-- 顶部过滤列表 -->
       <div class="flights-content">
         <!-- 过滤条件 -->
-        <FlightsFilters/>
+        <FlightsFilters :data="flightsData"/>
 
         <!-- 航班头部布局 -->
         <FlightsListHead />
@@ -44,7 +44,12 @@ export default {
   data() {
     return {
       // 从后台返回的最大的数据
-      flightsData: {},
+      flightsData: {
+        // 为了实现向过滤组件的传值,需要为对象添加属性和默认值
+        info:{},
+        options:{}
+
+      },
       // 先定义一个变量准备存储拆分大数据后的每页列表
       listData: [],
 

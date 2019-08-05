@@ -3,28 +3,40 @@
     <el-row type="flex" class="filters-top" justify="space-between" align="middle">
       <el-col :span="8">
         单程：
-        广州 - 上海
+        {{data.info.departCity}} - {{data.info.destCity}}
         /
-        2019-06-17
+       {{data.info.departDate}}
       </el-col>
       <el-col :span="4">
         <el-select size="mini" v-model="airport" placeholder="起飞机场" @change="handleAirport">
-          <el-option label="白云机场" value="白云机场"></el-option>
+          <el-option 
+          v-for="(item,index) in data.options.airport" 
+          :key="index"
+          :label="item" :value="item"></el-option>
         </el-select>
       </el-col>
       <el-col :span="4">
         <el-select size="mini" v-model="flightTimes" placeholder="起飞时间" @change="handleFlightTimes">
-          <el-option label="00:00 - 06:00" value="1"></el-option>
+          <el-option 
+          v-for="(item,index) in data.options.flightTimes" 
+          :key="index"
+          :label="`${item.from}:00 - ${item.to}:00`" :value="`${item.from},${item.to}`"></el-option>
         </el-select>
       </el-col>
       <el-col :span="4">
         <el-select size="mini" v-model="company" placeholder="航空公司" @change="handleCompany">
-          <el-option label="厦门航空" value="厦门航空"></el-option>
+          <el-option
+          v-for="(item,index) in data.options.company" 
+          :key="index"
+          :label="item" :value="item"></el-option>
         </el-select>
       </el-col>
       <el-col :span="4">
         <el-select size="mini" v-model="airSize" placeholder="机型" @change="handleAirSize">
-          <el-option label="大" value="大"></el-option>
+          <el-option
+          v-for="(item,index) in airSizeList" 
+          :key="index"
+          :label="item.label" :value="item.value"></el-option>
         </el-select>
       </el-col>
     </el-row>
@@ -37,12 +49,26 @@
 
 <script>
 export default {
+  // 声明组件可以接受哪些属性
+  props:{
+    data:{
+      type:Object,
+      default:{}
+    }
+  },
   data() {
     return {
       airport: "", // 机场
       flightTimes: "", // 出发时间
       company: "", // 航空公司
-      airSize: "" // 机型大小
+      airSize: "", // 机型大小
+
+      // 自定义机型大小数据列表
+      airSizeList:[
+        {label:"大",value:"L"},
+        {label:"中",value:"M"},
+        {label:"小",value:"S"}
+      ]
     };
   },
   methods: {
@@ -60,8 +86,11 @@ export default {
 
     // 撤销条件时候触发
     handleFiltersCancel() {}
+  },
+  mounted(){
+    // console.log(this.data)
   }
-};
+}
 </script>
 
 <style scoped lang="less">
