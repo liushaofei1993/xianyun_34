@@ -73,10 +73,31 @@ export default {
   },
   methods: {
     // 选择机场时候触发
-    handleAirport(value) {},
+    handleAirport(value) {
+       // 用数组的 filter 方法过滤出符合选择条件的数据组成新数组
+      const arr = this.data.flights.filter(v=>{
+        return v.org_airport_name === value   // 若v.airline_name = value为真,则将this.data.flights中符合条件的对象过滤出添加到arr中
+      })
+        // console.log(arr)
+        // 然后调用传到本组件中的父组件中的setListData方法修改列表数据
+        this.$emit("setListData", arr)
+    },
 
     // 选择出发时间时候触发
-    handleFlightTimes(value) {},
+    handleFlightTimes(value) {
+      // value = "6,12"  结构赋值数组
+      const [from,to] = value.split(",")
+       // 用数组的 filter 方法过滤出符合选择条件的数据组成新数组
+      const arr = this.data.flights.filter(v=>{
+        // 获取选择条件中的时的数值
+        const start = v.dep_time.split(":")[0]
+        return start >= from && start < to
+        // 若 start >= from && start <to 为真,则将this.data.flights中符合条件的对象过滤出添加到arr中
+      })
+        // console.log(arr)
+        // 然后调用传到本组件中的父组件中的setListData方法修改列表数据
+        this.$emit("setListData", arr)
+    },
 
     // 选择航空公司时候触发
     handleCompany(value) {
@@ -91,7 +112,13 @@ export default {
 
     // 选择机型时候触发
     handleAirSize(value) {
-
+       // 用数组的 filter 方法过滤出符合选择条件的数据组成新数组
+      const arr = this.data.flights.filter(v=>{
+        return v.plane_size === value   // 若v.airline_name = value为真,则将this.data.flights中符合条件的对象过滤出添加到arr中
+      })
+        // console.log(arr)
+        // 然后调用传到本组件中的父组件中的setListData方法修改列表数据
+        this.$emit("setListData", arr)
     },
 
     // 撤销条件时候触发
