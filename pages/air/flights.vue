@@ -4,7 +4,7 @@
       <!-- 顶部过滤列表 -->
       <div class="flights-content">
         <!-- 过滤条件 -->
-        <div></div>
+        <FlightsFilters/>
 
         <!-- 航班头部布局 -->
         <FlightsListHead />
@@ -36,6 +36,7 @@
 <script>
 import FlightsListHead from "@/components/air/flightsListHead.vue";
 import FlightsItem from "@/components/air/flightsItem.vue";
+import FlightsFilters from '@/components/air/flightsFilters'
 
 import moment from "moment";
 
@@ -48,13 +49,14 @@ export default {
       listData: [],
 
       pageIndex: 1,
-      pageSize: 2,
+      pageSize: 8,
       total: 0
     };
   },
   components: {
     FlightsListHead,
-    FlightsItem
+    FlightsItem,
+    FlightsFilters
   },
   methods: {
     // 设置数据库listData
