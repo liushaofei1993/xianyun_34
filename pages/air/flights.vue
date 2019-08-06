@@ -4,8 +4,8 @@
       <!-- 顶部过滤列表 -->
       <div class="flights-content">
         <!-- 过滤条件 -->
-        <FlightsFilters :data="cacheFlightsData" @setListData ="setListData"/>
-                              <!-- 上面这个是缓存的大数据,一旦赋值将不能修改,可解决修改过滤数据时flightsData被arr覆盖的问题 -->
+        <FlightsFilters :data="cacheFlightsData" @setListData="setListData" />
+        <!-- 上面这个是缓存的大数据,一旦赋值将不能修改,可解决修改过滤数据时flightsData被arr覆盖的问题 -->
         <!-- 航班头部布局 -->
         <FlightsListHead />
 
@@ -27,7 +27,7 @@
 
       <!-- 侧边栏 -->
       <div class="aside">
-        <FlightsAside/>
+        <FlightsAside />
       </div>
     </el-row>
   </section>
@@ -36,8 +36,8 @@
 <script>
 import FlightsListHead from "@/components/air/flightsListHead.vue";
 import FlightsItem from "@/components/air/flightsItem.vue";
-import FlightsFilters from '@/components/air/flightsFilters';
-import FlightsAside from '@/components/air/flightsAside'
+import FlightsFilters from "@/components/air/flightsFilters";
+import FlightsAside from "@/components/air/flightsAside";
 
 import moment from "moment";
 
@@ -47,9 +47,8 @@ export default {
       // 从后台返回的最大的数据
       flightsData: {
         // 为了实现向过滤组件的传值,需要为对象添加属性和默认值
-        info:{},
-        options:{}
-
+        info: {},
+        options: {}
       },
       // 先定义一个变量准备存储拆分大数据后的每页列表
       listData: [],
@@ -59,9 +58,9 @@ export default {
       total: 0,
 
       // 提前缓存一份大的数据
-      cacheFlightsData:{
-        info:{},
-        options:{}
+      cacheFlightsData: {
+        info: {},
+        options: {}
       }
     };
   },
@@ -72,13 +71,32 @@ export default {
     FlightsAside
   },
   methods: {
+    // 封装请求接口数据
+    getData() {
+      this.$axios({
+        url: "airs",
+        params: this.$route.query // 获取IP地址中的参数
+      }).then(res => {
+        console.log(res.data);
+        // 保存总的大数据
+        this.flightsData = res.data;
+
+        // 另外缓存一份总的大数据,赋值之后将不能被修改
+        this.cacheFlightsData = { ...res.data };
+
+        // 总和赋值
+        this.total = this.flightsData.flights.length;
+        // 切割出当前页面需要的数据
+        this.listData = this.flightsData.flights.slice(0,this.pageSize)
+      });
+    },
     // 设置数据库listData
     setListData(arr) {
       // 添加子组件flightsFilters的需求操作: 修改列表数据flightsData.flights
-      if(arr){
-        this.pageIndex = 1
-        this.flightsData.flights = arr
-        this.total = arr.length
+      if (arr) {
+        this.pageIndex = 1;
+        this.flightsData.flights = arr;
+        this.total = arr.length;
       }
 
       // 获取截取大数据时需要的参数
@@ -103,26 +121,18 @@ export default {
       this.setListData();
     }
   },
+  // 监听路由参数重新发送请求
+  watch: {
+    $route() {
+      this.pageIndex = 1;
+      this.getData()
+    }
+  },
   mounted() {
     // console.log(this.$route)
-    this.$axios({
-      url: "airs",
-      params: this.$route.query // 获取IP地址中的参数
-    }).then(res => {
-      console.log(res.data);
-      // 保存总的大数据
-      this.flightsData = res.data;
-
-      // 另外缓存一份总的大数据,赋值之后将不能被修改
-      this.cacheFlightsData = {...res.data}
-
-      // 总和赋值
-      this.total = this.flightsData.flights.length;
-      // 切割出当前页面需要的数据
-       this.setListData()
-    });
+    this.getData()
   }
-};
+  }
 </script>
 
 <style scoped lang="less">
