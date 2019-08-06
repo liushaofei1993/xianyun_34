@@ -99,7 +99,8 @@ export default {
       const arr = this.data.flights.filter(v=>{
         // 获取选择条件中的时的数值
         const start = v.dep_time.split(":")[0]
-        return start >= from && start < to
+        // + 符号是将字符串强行转换成数字再进行比较判断
+        return +start >= +from && +start < +to
         // 若 start >= from && start <to 为真,则将this.data.flights中符合条件的对象过滤出添加到arr中
       })
         // console.log(arr)
