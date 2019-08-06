@@ -205,7 +205,17 @@ export default {
                // 参数
                query:this.form
         })
-            this.$store.commit('air/setHistory',[this.form])
+            // 思路:先将store中的数据提取出来,将搜索框的数据添加到其中,再将新的数据存储到store中
+            const arr = [...this.$store.state.air.history]
+            // unshift 前添加      为了新的记录添加到第一个
+            arr.unshift(this.form)
+
+            // 当历史记录超过5个时,删除第六个
+            if(arr.length>5){
+                arr.length = 5
+            }
+
+            this.$store.commit('air/setHistory', arr)
         }
     },
     mounted() {

@@ -7,7 +7,7 @@ export const state = ()=>{
 export const mutations = {
     setHistory(state,arr){
         state.history = arr
-        console.log(state.history)
+        // console.log(state.history)
     }
 }
 
