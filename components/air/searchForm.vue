@@ -200,9 +200,12 @@ export default {
            }
            // 跳转到机票列表页
            this.$router.push({
+               // 路径
                path:'/air/flights',
+               // 参数
                query:this.form
         })
+            this.$store.commit('air/setHistory',[this.form])
         }
     },
     mounted() {

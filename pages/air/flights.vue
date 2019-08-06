@@ -27,7 +27,7 @@
 
       <!-- 侧边栏 -->
       <div class="aside">
-        <!-- 侧边栏组件 -->
+        <FlightsAside/>
       </div>
     </el-row>
   </section>
@@ -36,7 +36,8 @@
 <script>
 import FlightsListHead from "@/components/air/flightsListHead.vue";
 import FlightsItem from "@/components/air/flightsItem.vue";
-import FlightsFilters from '@/components/air/flightsFilters'
+import FlightsFilters from '@/components/air/flightsFilters';
+import FlightsAside from '@/components/air/flightsAside'
 
 import moment from "moment";
 
@@ -67,7 +68,8 @@ export default {
   components: {
     FlightsListHead,
     FlightsItem,
-    FlightsFilters
+    FlightsFilters,
+    FlightsAside
   },
   methods: {
     // 设置数据库listData
