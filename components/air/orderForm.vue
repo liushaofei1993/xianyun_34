@@ -32,7 +32,9 @@
       <h2>保险</h2>
       <div>
         <div class="insurance-item" v-for="(item,index) in infoData.insurances" :key="index">
-          <el-checkbox :label="`${ item.type }：￥${ item.price }/份×${ users.length }  最高赔付${ item.compensation }`"  border></el-checkbox>
+          <el-checkbox 
+          @change="handleChange(item)"
+          :label="`${ item.type }：￥${ item.price }/份×${ users.length }  最高赔付${ item.compensation }`"  border></el-checkbox>
         </div>
       </div>
     </div>
@@ -42,11 +44,11 @@
       <div class="contact">
         <el-form label-width="60px">
           <el-form-item label="姓名">
-            <el-input></el-input>
+            <el-input v-model="contactName"></el-input>
           </el-form-item>
 
           <el-form-item label="手机">
-            <el-input placeholder="请输入内容">
+            <el-input placeholder="请输入内容" v-model="contactPhone">
               <template slot="append">
                 <el-button @click="handleSendCaptcha">发送验证码</el-button>
               </template>
@@ -54,7 +56,7 @@
           </el-form-item>
 
           <el-form-item label="验证码">
-            <el-input></el-input>
+            <el-input v-model="captcha"></el-input>
           </el-form-item>
         </el-form>
         <el-button type="warning" class="submit" @click="handleSubmit">提交订单</el-button>
@@ -85,6 +87,16 @@ export default {
       }
     },
   methods: {
+      handleChange(item){
+        const index = this.insurances.indexOf(item.id)
+        if(index > -1){
+            this.insurances.splice(index, 1)
+        } else{
+            // 将选中的保险的id添加到insurances数组中
+            this.insurances.push(item.id)
+        }
+          
+      },
     // 添加乘机人
     handleAddUsers() {
         // 给users增加一个对象,利用v-for自动生成新的用户列表
@@ -104,7 +116,18 @@ export default {
     handleSendCaptcha() {},
 
     // 提交订单
-    handleSubmit() {}
+    handleSubmit() {
+        // console.log(this.insurances)
+         const data = {
+             users: this.users,
+             insurances: this.insurances,
+             contactName: this.contactName,
+             contactPhone: this.contactPhone,
+             captcha: this.captcha,
+             invoice: this.invoice,
+         }
+         console.log(data)
+    }
   },
   mounted(){
       const {id,seat_xid} = this.$route.query
@@ -114,7 +137,7 @@ export default {
               seat_xid
           }
       }).then(res => {
-        //   console.log(res.data)
+          console.log(res.data)
         this.infoData = res.data
       })
   }
