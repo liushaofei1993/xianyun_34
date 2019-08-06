@@ -3,6 +3,7 @@
     <div class="air-column">
       <h2>乘机人</h2>
       <el-form class="member-info">
+          <!-- 循环渲染的乘机人 -->
         <div class="member-info-item" v-for="(item,index) in users" :key="index">
           <el-form-item label="乘机人类型">
             <el-input placeholder="姓名" class="input-with-select" v-model="item.username">
@@ -20,7 +21,7 @@
             </el-input>
           </el-form-item>
 
-          <span class="delete-user" @click="handleDeleteUser()">-</span>
+          <span class="delete-user" @click="handleDeleteUser(index)">-</span>
         </div>
       </el-form>
 
@@ -91,7 +92,10 @@ export default {
     },
 
     // 移除乘机人
-    handleDeleteUse() {},
+    handleDeleteUser(index) {
+        // 利用当前列表项的下标进行删除数组中的某一项
+        this.users.splice(index,1)
+    },
 
     // 发送手机验证码
     handleSendCaptcha() {},
