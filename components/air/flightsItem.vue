@@ -46,7 +46,7 @@
             </el-col>
             <el-col :span="5" class="price">￥{{item.org_settle_price}}</el-col>
             <el-col :span="3" class="choose-button">
-              <el-button type="warning" size="mini">选定</el-button>
+              <el-button type="warning" size="mini" @click="handleToLink(data.id,data.seat_infos[index].seat_xid)">选定</el-button>
               <p>剩余：{{item.discount}}</p>
             </el-col>
           </el-row>
@@ -71,6 +71,17 @@ export default {
   data(){
     return{
       isShow:false
+    }
+  },
+  methods:{
+    handleToLink(id,seat_xid){
+      this.$router.push({
+        path:"/air/order",
+        query:{
+          id,
+          seat_xid
+        }
+      })
     }
   },
   computed:{
