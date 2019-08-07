@@ -2,10 +2,10 @@
     <div class="container">
         <el-row type="flex" justify="space-between">
             <!-- 订单表单 -->
-            <OrderForm @setInfoData ="setInfoData" />
+            <OrderForm @setInfoData ="setInfoData" @setAllPrice="setAllPrice"/>
 
             <!-- 侧边栏 -->
-            <OrderAside :data="infoData"/>
+            <OrderAside :data="infoData" :allPrice="allPrice"/>
         </el-row>
     </div>
 </template>
@@ -18,7 +18,8 @@ export default {
         return{
             infoData:{
                 seat_infos:{}  // =====   由于请求后台数据速度问题,orderAside.vue组件中渲染data时 先 使用的是父组件中的定义好的infoData,若是不加属性seat_infos就会导致渲染seat_infos数据中的某属性时 出现如下错误:  Cannot read property 'org_settle_price' of undefined :某属性无定义   而在子组件orderAside中同样位置添加属性  seat_infos  时没有用的 =====
-            }
+            },
+            allPrice:0
         }
     },
     components:{
@@ -28,6 +29,9 @@ export default {
     methods:{
         setInfoData(data){
             this.infoData = data
+        },
+        setAllPrice(price){
+            this.allPrice = price
         }
     }
 }

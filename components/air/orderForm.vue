@@ -62,6 +62,9 @@
         <el-button type="warning" class="submit" @click="handleSubmit">提交订单</el-button>
       </div>
     </div>
+
+    <!-- 调用allprice让总价开始计算 -->
+    <input type="hidden" :value="allPrice">
   </div>
 </template>
 
@@ -85,7 +88,7 @@ export default {
 
         invoice:false           // 是否需要发票
       }
-    },
+  },
   methods: {
     // 获取选中的保险id
       handleChange(item){
@@ -178,6 +181,29 @@ export default {
         }).then(res=>{
           console.log(res)
         })
+    }
+  },
+  computed:{
+    // computed中的函数内部所引用的实例的属性一旦发生变化
+    // 就会重复调用,返回新的值
+    allPrice(){
+      let price = 0;
+      // 如果请求的数据还没有返回,就默认为0
+      if(!this.infoData.seat_infos){
+        return 0
+      }
+      // 机票单价
+      price += this.infoData.seat_infos.org_settle_price
+      // 燃油费用
+      price += this.infoData.airport_tax_audlet
+      // 保险费
+      price += this.insurances.length * 30
+      // 乘机人数
+      price *= this.users.length
+      // 把总价格返回给组件
+      this.$emit("setAllPrice",price)
+
+      return price
     }
   },
   mounted(){
