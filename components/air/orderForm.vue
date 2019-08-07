@@ -146,6 +146,27 @@ export default {
              air:this.$route.query.id
          }
         //  console.log(data)
+
+        // 表单验证
+        // 判断表单是否通过
+        let valid = true
+        // 遍历数组,判断乘机人
+        this.users.forEach(v=>{
+          if(!v.username || !v.id){
+            this.$alert("乘机人信息不能为空","提示",{type:"warning"})
+            valid = false
+          }
+        })
+
+        if(!valid){
+          return
+        }
+        // 判断联系人信息
+        if(!this.contactName){
+          this.$alert("联系人姓名不能为空","提示",{type:"warning"})
+          return
+        }
+
         // 提交订单
         this.$axios({
           url:"/airorders",
