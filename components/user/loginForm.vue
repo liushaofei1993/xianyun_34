@@ -47,7 +47,10 @@ export default {
                     // 调用store中mutations中的方法是要用 commit
                     this.$store.commit('user/setUserInfo',res.data)
                     // 登陆成功之后进行跳转
-                    this.$router.push('/')
+                    // this.$router.push('/')
+                    
+                    // 为了处理401和403的错误,需要登录成功后跳转到上一页
+                    this.$router.back()
                 })
             }
         })
