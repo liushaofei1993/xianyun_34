@@ -87,6 +87,7 @@ export default {
       }
     },
   methods: {
+    // 获取选中的保险id
       handleChange(item){
         const index = this.insurances.indexOf(item.id)
         if(index > -1){
@@ -113,7 +114,23 @@ export default {
     },
 
     // 发送手机验证码
-    handleSendCaptcha() {},
+    handleSendCaptcha() {
+      if(!this.contactPhone){
+        this.$alert("手机号不能为空","提示",{type:"warning"})
+        return
+      }
+      this.$axios({
+        url:"/captchas",
+        method:"POST",
+        data:{
+          tel:this.contactPhone
+        }
+      }).then(res=>{
+        // console.log(res)
+        const {code} = res.data
+        this.$alert(`模拟的手机验证码为: ${code}`,"提示",{type:"warning"})
+      })
+    },
 
     // 提交订单
     handleSubmit() {
@@ -125,8 +142,21 @@ export default {
              contactPhone: this.contactPhone,
              captcha: this.captcha,
              invoice: this.invoice,
+             seat_xid:this.$route.query.seat_xid,
+             air:this.$route.query.id
          }
-         console.log(data)
+        //  console.log(data)
+        // 提交订单
+        this.$axios({
+          url:"/airorders",
+          method:"POST",
+          data,
+          headers:{
+            Authorization:` Bearer ${this.$store.state.user.userInfo.token}`
+          }
+        }).then(res=>{
+          console.log(res)
+        })
     }
   },
   mounted(){
