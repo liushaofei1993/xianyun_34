@@ -190,6 +190,9 @@ export default {
       }).then(res => {
           console.log(res.data)
         this.infoData = res.data
+        
+        //将返回的数据传给父组件
+        this.$emit("setInfoData",this.infoData)
       })
   }
 };
