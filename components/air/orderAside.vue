@@ -47,7 +47,6 @@
 </template>
 
  <script>
- 做一个测试: 撤回提交代码.
 export default {
     // 组件可以接收的数据
     props: {
