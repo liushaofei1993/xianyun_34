@@ -1,8 +1,8 @@
 {
   "name": "xianyun",
   "version": "1.0.0",
-  "description": "My tremendous Nuxt.js project",
-  "author": "itcast-hsian",
+  "description": "My epic Nuxt.js project",
+  "author": "chipooi",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -17,6 +17,9 @@
     "less-loader": "^5.0.0",
     "moment": "^2.24.0",
     "nuxt": "^2.0.0",
+    "qrcode": "^1.4.1",
+    "quill": "^1.3.6",
+    "vue-quill-editor": "^3.0.6",
     "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {

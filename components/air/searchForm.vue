@@ -94,10 +94,10 @@ export default {
            this.$axios({
                url:'/airs/city',
                params:{
-                   name:value
+                  name:value
                    }
            }).then(res=>{
-            //    console.log(res)
+               console.log(res)
             const {data} = res.data
             // 给每一个对象添加一个value属性
             const newData = [];
@@ -106,7 +106,7 @@ export default {
                 newData.push(v)
                 // console.log(newData)
             })  
-            // 设置第一个城市为默认值
+            // 1设置第一个城市为默认值
             this.form.departCity = newData[0].value
             this.form.departCode = newData[0].sort
 
@@ -129,7 +129,7 @@ export default {
                    name:value
                    }
            }).then(res=>{
-            //    console.log(res)
+               console.log(res)
             const {data} = res.data
             // 给每一个对象添加一个value属性
             const newData = []
@@ -181,7 +181,7 @@ export default {
 
         // 提交表单时触发
         handleSubmit(){
-           console.log(this.form)
+        //    console.log(this.form)
            // 自定义表单验证
            if(!this.form.departCity){
                this.$alert('出发城市不能为空','提示',
